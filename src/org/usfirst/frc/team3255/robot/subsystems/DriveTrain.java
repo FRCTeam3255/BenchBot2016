@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
+
 /**
  *
  */
@@ -63,12 +64,12 @@ public class DriveTrain extends PIDSubsystem {
 		leftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_CHA, RobotMap.DRIVETRAIN_LEFT_ENCODER_CHB);
 		leftEncoder.setDistancePerPulse(1.0 / ENCODER_COUNTS_PER_ROTATION);
 		
-		LiveWindow.addActuator("Drivetrain", "Front Left Talon", frontLeftTalon);
+		//LiveWindow.addActuator("Drivetrain", "Front Left Talon", frontLeftTalon);
 		// LiveWindow.addActuator("Drivetrain", "Back Left Talon", backLeftTalon);
-		LiveWindow.addActuator("Drivetrain", "Front Right Talon", frontRightTalon);
+		//LiveWindow.addActuator("Drivetrain", "Front Right Talon", frontRightTalon);
 		// LiveWindow.addActuator("Drivetrain", "Back Right Talon", backRightTalon);
-		LiveWindow.addSensor("Drivetrain", "Left Encoder", leftEncoder);
-		LiveWindow.addActuator("Drivetrain", "PID Controller", this.getPIDController());
+		//LiveWindow.addSensor("Drivetrain", "Left Encoder", leftEncoder);
+		//LiveWindow.addActuator("Drivetrain", "PID Controller", this.getPIDController());
 	}
 	
 	public void setSpeed(double s) {
