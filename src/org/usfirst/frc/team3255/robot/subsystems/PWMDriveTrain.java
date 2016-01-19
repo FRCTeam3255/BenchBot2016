@@ -2,6 +2,7 @@ package org.usfirst.frc.team3255.robot.subsystems;
 
 import org.usfirst.frc.team3255.robot.OI;
 import org.usfirst.frc.team3255.robot.RobotMap;
+import org.usfirst.frc.team3255.robot.commands.CommandBase;
 import org.usfirst.frc.team3255.robot.commands.DriveArcade;
 
 import edu.wpi.first.wpilibj.CANTalon;
@@ -31,6 +32,8 @@ public class PWMDriveTrain extends PIDSubsystem {
 	
 	private static final int ENCODER_COUNTS_PER_ROTATION = 750;
 	private static final double MAX_PID_SPEED = 0.3;
+	private static final double MAX_YAW_CORRECT_SPEED = 0.5;
+	private static final double YAW_SCALE = (MAX_YAW_CORRECT_SPEED / 180.0);
     
 	// Define constructors here
 	public PWMDriveTrain() {
@@ -83,6 +86,13 @@ public class PWMDriveTrain extends PIDSubsystem {
 	public void arcadeDrive(){
 		double moveSpeed = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_MOVE);
 		double moveRotate = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_ROTATE);
+		
+		robotDrive.arcadeDrive(moveSpeed, moveRotate);
+	}
+	
+	public void straightDrive(){
+		double moveSpeed = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_MOVE);
+		double moveRotate = CommandBase.navigation.getYaw() * YAW_SCALE;
 		
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}
