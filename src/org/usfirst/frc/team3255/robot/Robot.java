@@ -2,12 +2,15 @@
 package org.usfirst.frc.team3255.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 import org.usfirst.frc.team3255.robot.subsystems.ExampleSubsystem;
+
+import com.kauailabs.navx.frc.AHRS;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -18,6 +21,7 @@ import org.usfirst.frc.team3255.robot.subsystems.ExampleSubsystem;
  */
 public class Robot extends IterativeRobot {
 
+	//AHRS ahrs;
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
@@ -29,6 +33,7 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
 		CommandBase.init();
+		//ahrs = new AHRS(SPI.Port.kMXP);
 		
         // instantiate the command used for the autonomous period
         // autonomousCommand = new ExampleCommand();

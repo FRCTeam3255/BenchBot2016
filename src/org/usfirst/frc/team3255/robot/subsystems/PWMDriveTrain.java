@@ -4,26 +4,18 @@ import org.usfirst.frc.team3255.robot.OI;
 import org.usfirst.frc.team3255.robot.RobotMap;
 import org.usfirst.frc.team3255.robot.commands.DriveArcade;
 
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 
 /**
  *
  */
-public class PWMDriveTrain extends Subsystem {
-	
-	public PWMDriveTrain() {
-		super();
-		
-		init();
-	}
-	
-	public PWMDriveTrain(String name) {
-		super(name);
-		
-		init();
-	}
+public class PWMDriveTrain extends PIDSubsystem {
 	
 	// Motor Controls
 	Talon frontLeftTalon = null;
@@ -31,12 +23,31 @@ public class PWMDriveTrain extends Subsystem {
 	Talon frontRightTalon = null;
 	Talon backRightTalon = null;
 	
+	// Encoders
+	Encoder leftEncoder = null;
+	
 	//Robot Drive
 	RobotDrive robotDrive = null;
+	
+	private static final int ENCODER_COUNTS_PER_ROTATION = 750;
+	private static final double MAX_PID_SPEED = 0.3;
     
+	// Define constructors here
+	public PWMDriveTrain() {
+		super(0, 0, 0);
+		
+		init();
+	}
+	
+	public PWMDriveTrain(String name) {
+		super(name, 0, 0, 0);
+		
+		init();
+	}
+	
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	
 	public void init() {
 		frontLeftTalon = new Talon(RobotMap.DRIVETRAIN_FRONT_LEFT_TALON);
 		backLeftTalon = new Talon(RobotMap.DRIVETRAIN_BACK_LEFT_TALON);
@@ -50,6 +61,16 @@ public class PWMDriveTrain extends Subsystem {
 		
 		robotDrive = new RobotDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
 		robotDrive.setSafetyEnabled(false);
+		
+		leftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_CHA, RobotMap.DRIVETRAIN_LEFT_ENCODER_CHB);
+		leftEncoder.setDistancePerPulse(1.0 / ENCODER_COUNTS_PER_ROTATION);
+		
+		LiveWindow.addActuator("Drivetrain", "Front Left Talon", frontLeftTalon);
+		// LiveWindow.addActuator("Drivetrain", "Back Left Talon", backLeftTalon);
+		//LiveWindow.addActuator("Drivetrain", "Front Right Talon", frontRightTalon);
+		// LiveWindow.addActuator("Drivetrain", "Back Right Talon", backRightTalon);
+		LiveWindow.addSensor("Drivetrain", "Left Encoder", leftEncoder);
+		LiveWindow.addActuator("Drivetrain", "PID Controller", this.getPIDController());
 	}
 	
 	public void setSpeed(double s) {
@@ -66,10 +87,32 @@ public class PWMDriveTrain extends Subsystem {
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}
 	
+	public double getLeftEncoderCount() {
+		return leftEncoder.get();
+	}
+	
+	public double getLeftEncoderDistance() {
+		return leftEncoder.getDistance();
+	}
+	
+	public void resetEncoders() {
+		leftEncoder.reset();
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveArcade());
     }
+
+	@Override
+	protected double returnPIDInput() {
+		return getLeftEncoderDistance();
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		setSpeed(Math.min(output, MAX_PID_SPEED));
+	}
 }
 

@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.command.Command;
 //Test
 
 public abstract class CommandBase extends Command {
-	public static final DriveTrain drivetrain = new DriveTrain();
+	public static final PWMDriveTrain drivetrain = new PWMDriveTrain();
 	public static final Telemetry telemetry = new Telemetry();
 	public static final PIDShooter shooter = new PIDShooter();
 	public static OI oi;
