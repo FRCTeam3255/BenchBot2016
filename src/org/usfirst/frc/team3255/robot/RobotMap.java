@@ -39,8 +39,8 @@ public class RobotMap {
 	public static final int DRIVETRAIN_LEFT_ENCODER_CHA = 2;
 	public static final int DRIVETRAIN_LEFT_ENCODER_CHB = 3;
 	
-	public static final int CASSETTE_LIFT_ENCODER_CHA = 13;
-	public static final int CASSETTE_LIFT_ENCODER_CHB = 14;
+	public static final int CASSETTE_LIFT_ENCODER_CHA = 8;
+	public static final int CASSETTE_LIFT_ENCODER_CHB = 9;
 	
 	public static final int SHOOTER_FLYWHEEL_ENCODER_CHA = 4;
 	public static final int SHOOTER_FLYWHEEL_ENCODER_CHB = 5;

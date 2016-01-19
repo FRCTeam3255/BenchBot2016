@@ -8,17 +8,23 @@ import edu.wpi.first.wpilibj.command.Command;
 //Test
 
 public abstract class CommandBase extends Command {
-	public static final PWMDriveTrain drivetrain = new PWMDriveTrain();
-	public static final Telemetry telemetry = new Telemetry();
-	public static final PIDShooter shooter = new PIDShooter();
+	public static PWMDriveTrain drivetrain;
+	public static PIDShooter shooter;
+	public static Navigation navigation;
+	public static PIDCassette PIDCassette;
+	public static Telemetry telemetry;
 	public static OI oi;
-	public static final PIDCassette PIDCassette = new PIDCassette();
 	
 	public CommandBase() {
 		
 	}
 
 	public static void init() {
+		navigation = new Navigation();
+		drivetrain = new PWMDriveTrain();
+		shooter = new PIDShooter();
+		PIDCassette = new PIDCassette();
+		telemetry = new Telemetry();
 		oi = new OI();
 	}
 

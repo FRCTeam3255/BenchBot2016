@@ -38,6 +38,7 @@ public class Telemetry extends Subsystem {
 	public void update() {
 		SmartDashboard.putNumber("Left Encoder Counts", CommandBase.drivetrain.getLeftEncoderCount());
 		SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
+		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
 	}
 
     public void initDefaultCommand() {
