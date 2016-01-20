@@ -48,6 +48,8 @@ public class OI {
 	public OI() {
 		//manipulatorStick
 		M1.whenPressed(new ShooterShoot());	
+		
+		//driveStick
 		D5.whileHeld(new DriveStraight());
 	}
 }

@@ -42,7 +42,7 @@ public class PIDShooter extends PIDSubsystem {
 		LiveWindow.addActuator("Shooter", "Flywheel Talon", flyWheelTalon);
 		
 		LiveWindow.addSensor("Shooter", "Shooter Encoder", shooterEncoder);
-		LiveWindow.addActuator("Shooter", "Cassette PID Controller", this.getPIDController());
+		LiveWindow.addActuator("Shooter", "Shooter PID Controller", this.getPIDController());
 	}
 	
 	public void setSpeed(double s) {
