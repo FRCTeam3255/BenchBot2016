@@ -32,8 +32,7 @@ public class PWMDriveTrain extends PIDSubsystem {
 	
 	private static final int ENCODER_COUNTS_PER_ROTATION = 750;
 	private static final double MAX_PID_SPEED = 0.3;
-	private static final double MAX_YAW_CORRECT_SPEED = 0.5;
-	private static final double YAW_SCALE = (MAX_YAW_CORRECT_SPEED / 180.0);
+	private static final double YAW_COEFFICENT = 0.03;
     
 	// Define constructors here
 	public PWMDriveTrain() {
@@ -92,7 +91,7 @@ public class PWMDriveTrain extends PIDSubsystem {
 	
 	public void straightDrive(){
 		double moveSpeed = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_MOVE);
-		double moveRotate = CommandBase.navigation.getYaw() * YAW_SCALE;
+		double moveRotate = CommandBase.navigation.getYaw()*YAW_COEFFICENT;
 		
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}

@@ -3,12 +3,13 @@ package org.usfirst.frc.team3255.robot.commands;
 /**
  *
  */
-public class DriveArcade extends CommandBase {
+public class DriveStraight extends CommandBase {
 
-    public DriveArcade() {
+    public DriveStraight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(drivetrain);
+    	requires(navigation);
     }
 
     // Called just before this Command runs the first time
@@ -17,7 +18,7 @@ public class DriveArcade extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drivetrain.arcadeDrive();
+    	drivetrain.straightDrive();
     }
 
     // Make this return true when this Command no longer needs to run execute()

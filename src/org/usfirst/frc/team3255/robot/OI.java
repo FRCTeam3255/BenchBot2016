@@ -43,10 +43,12 @@ public class OI {
 	public static Joystick driverStick = new Joystick(RobotMap.JOYSTICK_DRIVER);
 	
 	Button M1 = new JoystickButton(manipulatorStick, 1);
+	Button D5 = new JoystickButton(driverStick, 5);
 	
 	public OI() {
 		//manipulatorStick
-		M1.whenPressed(new ShooterShoot());		
+		M1.whenPressed(new ShooterShoot());	
+		D5.whileHeld(new DriveStraight());
 	}
 }
 

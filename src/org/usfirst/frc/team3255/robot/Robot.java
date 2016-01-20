@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
+    	CommandBase.navigation.resetYaw();
         // schedule the autonomous command (example)
         // if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -53,6 +54,7 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+    	CommandBase.navigation.resetYaw();
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove

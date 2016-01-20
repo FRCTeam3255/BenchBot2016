@@ -40,7 +40,10 @@ public class Navigation extends Subsystem {
 	
 	public double getYaw() {
 		return ahrs.getYaw();
-//		return 0;
+	}
+	
+	public void resetYaw() {
+		ahrs.reset();
 	}
 	
 
