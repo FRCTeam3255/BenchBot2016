@@ -33,7 +33,7 @@ public class OI {
     // Run the command while the button is being held down and interrupt it once
     // the button is released.
     // button.whileHeld(new ExampleCommand());
-    
+  
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
@@ -43,14 +43,18 @@ public class OI {
 	public static Joystick driverStick = new Joystick(RobotMap.JOYSTICK_DRIVER);
 	
 	Button M1 = new JoystickButton(manipulatorStick, 1);
+	
 	Button D5 = new JoystickButton(driverStick, 5);
+	Button D6 = new JoystickButton(driverStick, 6);
 	
 	public OI() {
 		//manipulatorStick
-		M1.whenPressed(new ShooterShoot());	
+		M1.whenPressed(new ShooterShoot());
 		
 		//driveStick
 		D5.whileHeld(new DriveStraight());
+		D6.whenPressed(new UseRearCamera());
+		D6.whenReleased(new UseFrontCamera());
 	}
 }
 

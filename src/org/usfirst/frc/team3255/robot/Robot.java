@@ -42,6 +42,7 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	CommandBase.navigation.resetYaw();
+    	CommandBase.vision.cameraStart();
         // schedule the autonomous command (example)
         // if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -55,6 +56,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
     	CommandBase.navigation.resetYaw();
+    	CommandBase.vision.cameraStart();
 		// This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
@@ -67,7 +69,7 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-
+    	CommandBase.vision.cameraStop();
     }
 
     /**
