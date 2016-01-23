@@ -5,7 +5,6 @@ import org.usfirst.frc.team3255.robot.RobotMap;
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 import org.usfirst.frc.team3255.robot.commands.DriveArcade;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
