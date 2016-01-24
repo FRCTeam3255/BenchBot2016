@@ -89,9 +89,17 @@ public class PWMDriveTrain extends PIDSubsystem {
 	}
 	
 	public void straightDrive(){
-		double moveSpeed = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_MOVE);
-		double moveRotate = CommandBase.navigation.getYaw()*YAW_COEFFICENT;
+		double moveSpeed = CommandBase.vision.getToteSpeed();
+		double moveRotate = -CommandBase.vision.getToteCenterX();
 		
+//		if(moveSpeed < 0) {
+//			moveRotate = -moveRotate;
+//		}
+		
+		if (CommandBase.vision.isTote() == false) {
+			moveSpeed = 0.0;
+			moveRotate = 0.0;
+		}
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}
 	
@@ -106,12 +114,6 @@ public class PWMDriveTrain extends PIDSubsystem {
 	public void resetEncoders() {
 		leftEncoder.reset();
 	}
-	
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new DriveArcade());
-    }
 
 	@Override
 	protected double returnPIDInput() {
@@ -122,5 +124,11 @@ public class PWMDriveTrain extends PIDSubsystem {
 	protected void usePIDOutput(double output) {
 		setSpeed(Math.min(output, MAX_PID_SPEED));
 	}
+	
+	public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+    	setDefaultCommand(new DriveArcade());
+    }
 }
 

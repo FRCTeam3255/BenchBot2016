@@ -69,9 +69,9 @@ public class Vision extends Subsystem {
 	NIVision.Rect rect = new NIVision.Rect(10, 10, 100, 100);
 	
 	//Constants
-	public static NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(24, 49);	//Default hue range for yellow tote
-	public static NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(67, 255);	//Default saturation range for yellow tote
-	public static NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(49, 255);	//Default value range for yellow tote
+	public static NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(30, 40);	//Default hue range for yellow tote
+	public static NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(140, 255);	//Default saturation range for yellow tote
+	public static NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(180, 255);	//Default value range for yellow tote
 	public static double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
 	double LONG_RATIO = 2.22; //Tote long side = 26.9 / Tote height = 12.1 = 2.22
 	double SHORT_RATIO = 1.4; //Tote short side = 16.9 / Tote height = 12.1 = 1.4
@@ -222,6 +222,14 @@ public class Vision extends Subsystem {
 	
 	public boolean isTote() {
 		return isTote;
+	}
+	
+	public double getToteCenterX() {
+		return ((rect.left + (rect.width/2))-320)/320.0;
+	}
+	
+	public double getToteSpeed() {
+		return (getDistance()-6)/6.0;
 	}
 	
 	public double getDistance() {

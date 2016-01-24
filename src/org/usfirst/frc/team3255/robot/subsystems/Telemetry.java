@@ -60,6 +60,8 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putNumber("Convex Hull Area", CommandBase.vision.getConvexAreaScore());
 		SmartDashboard.putBoolean("IsTote", CommandBase.vision.isTote());
 		SmartDashboard.putNumber("Distance", CommandBase.vision.getDistance());
+		SmartDashboard.putNumber("ToteSpeed", CommandBase.vision.getToteSpeed());
+		SmartDashboard.putNumber("ToteX", CommandBase.vision.getToteCenterX());
 		SmartDashboard.putBoolean("IsFrontCamera", CommandBase.vision.isFrontCamera());
 	}
 
