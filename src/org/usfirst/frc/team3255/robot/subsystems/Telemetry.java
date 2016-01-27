@@ -52,6 +52,7 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
 
 		// Vision update
+		SmartDashboard.putBoolean("IsFrontCamera", CommandBase.vision.isFrontCamera());
 		SmartDashboard.putNumber("Raw particles", CommandBase.vision.getNumRawParticles());
 		SmartDashboard.putNumber("Filtered particles", CommandBase.vision.getNumParticles());
 		SmartDashboard.putNumber("Trapezoid", CommandBase.vision.getTrapezoidScore());
@@ -59,10 +60,8 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putNumber("Short Aspect", CommandBase.vision.getShortAspectScore());
 		SmartDashboard.putNumber("Convex Hull Area", CommandBase.vision.getConvexAreaScore());
 		SmartDashboard.putBoolean("IsTote", CommandBase.vision.isTote());
-		SmartDashboard.putNumber("Distance", CommandBase.vision.getDistance());
-		SmartDashboard.putNumber("ToteSpeed", CommandBase.vision.getToteSpeed());
-		SmartDashboard.putNumber("ToteX", CommandBase.vision.getToteCenterX());
-		SmartDashboard.putBoolean("IsFrontCamera", CommandBase.vision.isFrontCamera());
+		SmartDashboard.putNumber("Tote Distance", CommandBase.vision.getToteDistance());
+		SmartDashboard.putNumber("Tote X", CommandBase.vision.getToteCenterX());
 	}
 
 	public double getHueMin() {

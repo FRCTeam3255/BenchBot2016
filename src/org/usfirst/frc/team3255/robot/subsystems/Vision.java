@@ -176,9 +176,9 @@ public class Vision extends Subsystem {
 			scores.LongAspect = LongSideScore(particles.elementAt(0));
 			scores.ShortAspect = ShortSideScore(particles.elementAt(0));
 			scores.AreaToConvexHullArea = ConvexHullAreaScore(particles.elementAt(0));
-			isTote = scores.Trapezoid > SCORE_MIN && (scores.LongAspect > SCORE_MIN || scores.ShortAspect > SCORE_MIN) && scores.AreaToConvexHullArea > SCORE_MIN;
 			boolean isLong = scores.LongAspect > scores.ShortAspect;
 			distance = computeDistance(binaryFrame, particles.elementAt(0), isLong);
+			isTote = scores.Trapezoid > SCORE_MIN && (scores.LongAspect > SCORE_MIN || scores.ShortAspect > SCORE_MIN) && scores.AreaToConvexHullArea > SCORE_MIN;
 		} 
 		else {
 			isTote = false;
@@ -228,11 +228,7 @@ public class Vision extends Subsystem {
 		return ((rect.left + (rect.width/2))-320)/320.0;
 	}
 	
-	public double getToteSpeed() {
-		return (getDistance()-6)/6.0;
-	}
-	
-	public double getDistance() {
+	public double getToteDistance() {
 		return distance;
 	}
 	

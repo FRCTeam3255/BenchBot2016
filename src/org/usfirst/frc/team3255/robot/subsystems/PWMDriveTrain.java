@@ -8,14 +8,13 @@ import org.usfirst.frc.team3255.robot.commands.DriveArcade;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 
 /**
  *
  */
-public class PWMDriveTrain extends PIDSubsystem {
+public class PWMDriveTrain extends Subsystem {
 	
 	// Motor Controls
 	Talon frontLeftTalon = null;
@@ -29,19 +28,31 @@ public class PWMDriveTrain extends PIDSubsystem {
 	//Robot Drive
 	RobotDrive robotDrive = null;
 	
+	// PIDController for vision based turning to keep a vision target centered in the image
+	// Note this PIDController will only control rotate speed (nor forward/reverse)
+	VisionRotatePID visionRotatePID = null;
+	
+	// PIDController to maintain a specified distance from a vision target
+	// Note this PIDController will only control forward/reverse speed (no rotate)
+	VisionDistancePID visionDistancePID = null;
+	
+	// PIDController to drive a specified distance
+	EncoderDistancePID encoderDistancePID = null;
+	
 	private static final int ENCODER_COUNTS_PER_ROTATION = 750;
-	private static final double MAX_PID_SPEED = 0.3;
-	private static final double YAW_COEFFICENT = 0.03;
+	private static final double MAX_PID_MOVE_SPEED = 0.7;
+	private static final double MAX_PID_ROTATE_SPEED = 0.6;
+	private static final double VISION_DISTANCE = 6.0;
     
 	// Define constructors here
 	public PWMDriveTrain() {
-		super(0, 0, 0);
+		super();
 		
 		init();
 	}
 	
 	public PWMDriveTrain(String name) {
-		super(name, 0, 0, 0);
+		super(name);
 		
 		init();
 	}
@@ -66,12 +77,26 @@ public class PWMDriveTrain extends PIDSubsystem {
 		leftEncoder = new Encoder(RobotMap.DRIVETRAIN_LEFT_ENCODER_CHA, RobotMap.DRIVETRAIN_LEFT_ENCODER_CHB);
 		leftEncoder.setDistancePerPulse(1.0 / ENCODER_COUNTS_PER_ROTATION);
 		
+		// PIDController for vision based turning
+		visionRotatePID = new VisionRotatePID();
+		visionRotatePID.setOutputRange(-MAX_PID_ROTATE_SPEED, MAX_PID_ROTATE_SPEED);
+		
+		// PIDController for vision based forward/reverse speed
+		visionDistancePID = new VisionDistancePID(VISION_DISTANCE);
+		visionDistancePID.setOutputRange(-MAX_PID_MOVE_SPEED, MAX_PID_MOVE_SPEED);
+		
+		// PIDController to drive to a specified encoder distance
+		encoderDistancePID = new EncoderDistancePID(leftEncoder);		
+		encoderDistancePID.setOutputRange(-MAX_PID_MOVE_SPEED, MAX_PID_MOVE_SPEED);
+		
 		LiveWindow.addActuator("Drivetrain", "Front Left Talon", frontLeftTalon);
 		// LiveWindow.addActuator("Drivetrain", "Back Left Talon", backLeftTalon);
 		//LiveWindow.addActuator("Drivetrain", "Front Right Talon", frontRightTalon);
 		// LiveWindow.addActuator("Drivetrain", "Back Right Talon", backRightTalon);
 		LiveWindow.addSensor("Drivetrain", "Left Encoder", leftEncoder);
-		LiveWindow.addActuator("Drivetrain", "PID Controller", this.getPIDController());
+		LiveWindow.addActuator("Drivetrain", "Vision Rotate PID", visionRotatePID.getPIDController());
+		LiveWindow.addActuator("Drivetrain", "Vision Distance PID", visionDistancePID.getPIDController());
+		LiveWindow.addActuator("Drivetrain", "Encoder Distance PID", encoderDistancePID.getPIDController());
 	}
 	
 	public void setSpeed(double s) {
@@ -88,18 +113,10 @@ public class PWMDriveTrain extends PIDSubsystem {
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}
 	
-	public void straightDrive(){
-		double moveSpeed = CommandBase.vision.getToteSpeed();
-		double moveRotate = -CommandBase.vision.getToteCenterX();
+	public void visionDrive(){
+		double moveSpeed = visionDistancePID.getOuptut();
+		double moveRotate = -visionRotatePID.getOuptut();
 		
-//		if(moveSpeed < 0) {
-//			moveRotate = -moveRotate;
-//		}
-		
-		if (CommandBase.vision.isTote() == false) {
-			moveSpeed = 0.0;
-			moveRotate = 0.0;
-		}
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
 	}
 	
@@ -114,21 +131,39 @@ public class PWMDriveTrain extends PIDSubsystem {
 	public void resetEncoders() {
 		leftEncoder.reset();
 	}
-
-	@Override
-	protected double returnPIDInput() {
-		return getLeftEncoderDistance();
-	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		setSpeed(Math.min(output, MAX_PID_SPEED));
+	
+	public void startVisionPID() {
+		// reset each of the vision PIDs
+		visionRotatePID.getPIDController().reset();
+		visionDistancePID.getPIDController().reset();
+		
+		// enable each of the vision PIDs
+		visionRotatePID.enable();
+		visionDistancePID.enable();
 	}
 	
+	public void stopVisionPID() {
+		// reset each of the vision PIDs (which also disables them)
+		visionRotatePID.getPIDController().reset();
+		visionDistancePID.getPIDController().reset();		
+	}
+	
+	public void startEncoderPID() {
+		// reset the encoder PID
+		encoderDistancePID.getPIDController().reset();
+		
+		// enable the encoder PID
+		encoderDistancePID.enable();
+	}
+	
+	public void stopEncoderPID() {
+		// reset the encoder PID (which also disables it)
+		encoderDistancePID.getPIDController().reset();
+	}
+
 	public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     	setDefaultCommand(new DriveArcade());
     }
 }
-

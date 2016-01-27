@@ -3,22 +3,20 @@ package org.usfirst.frc.team3255.robot.commands;
 /**
  *
  */
-public class DriveStraight extends CommandBase {
+public class DriveVision extends CommandBase {
 
-    public DriveStraight() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+    public DriveVision() {
     	requires(drivetrain);
-    	requires(navigation);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	drivetrain.startVisionPID();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	drivetrain.straightDrive();
+    	drivetrain.visionDrive();
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -28,6 +26,7 @@ public class DriveStraight extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
+    	drivetrain.stopVisionPID();
     	drivetrain.setSpeed(0.0);
     }
 

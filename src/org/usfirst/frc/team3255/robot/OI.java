@@ -52,7 +52,7 @@ public class OI {
 		M1.whenPressed(new ShooterShoot());
 		
 		//driveStick
-		D5.whileHeld(new DriveStraight());
+		D5.whileHeld(new DriveVision());
 		D6.whenPressed(new UseRearCamera());
 		D6.whenReleased(new UseFrontCamera());
 	}
