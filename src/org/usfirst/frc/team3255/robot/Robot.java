@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
-import org.usfirst.frc.team3255.robot.subsystems.ExampleSubsystem;
 import org.usfirst.frc.team3255.robot.subsystems.Navigation;
 
 /**
@@ -18,7 +17,6 @@ import org.usfirst.frc.team3255.robot.subsystems.Navigation;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
 	Command autonomousCommand;

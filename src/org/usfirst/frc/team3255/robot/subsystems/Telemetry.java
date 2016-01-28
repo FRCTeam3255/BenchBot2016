@@ -33,12 +33,17 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putData("Drive Forward 4 Rotations", new DriveDistanceForward(4));
 		SmartDashboard.putData("Drive Stop", new DriveStop());
 		SmartDashboard.putData("Reset Encoders", new DriveEncoderReset());
+
+		SmartDashboard.putData("Shooter Enable", new ShooterEnable());
+		SmartDashboard.putData("Shooter Disable", new ShooterDisable());
 	}
 	
 	public void update() {
 		SmartDashboard.putNumber("Left Encoder Counts", CommandBase.drivetrain.getLeftEncoderCount());
 		SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
+		SmartDashboard.putNumber("Mag Encoder Position", CommandBase.PIDShooter.getMagEncoderPosition());
+		SmartDashboard.putNumber("Mag Encoder Velocity", CommandBase.PIDShooter.getMagEncoderVelocity());
 	}
 
     public void initDefaultCommand() {

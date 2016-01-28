@@ -3,7 +3,6 @@ package org.usfirst.frc.team3255.robot.subsystems;
 import org.usfirst.frc.team3255.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -26,8 +25,6 @@ public class PIDShooter extends PIDSubsystem {
 	// Motor Controls
 	CANTalon flyWheelTalon = null;
 	
-	Encoder shooterEncoder = null;
-	
 	private static final int ENCODER_COUNT_PER_ROTATION = 750;
 	private static final double MAX_SHOOTER_PID_SPEED = 0.6;
 	
@@ -36,12 +33,8 @@ public class PIDShooter extends PIDSubsystem {
 		
 		flyWheelTalon.setSafetyEnabled(false);
 		
-		shooterEncoder = new Encoder(RobotMap.SHOOTER_FLYWHEEL_ENCODER_CHA, RobotMap.SHOOTER_FLYWHEEL_ENCODER_CHB);
-		shooterEncoder.setDistancePerPulse(1.0 / ENCODER_COUNT_PER_ROTATION);
-		
 		LiveWindow.addActuator("Shooter", "Flywheel Talon", flyWheelTalon);
 		
-		LiveWindow.addSensor("Shooter", "Shooter Encoder", shooterEncoder);
 		LiveWindow.addActuator("Shooter", "Shooter PID Controller", this.getPIDController());
 	}
 	
@@ -49,12 +42,12 @@ public class PIDShooter extends PIDSubsystem {
 		flyWheelTalon.set(s);
 	}
 	
-	public double getShooterEncoderCount() {
-		return shooterEncoder.get();
+	public double getMagEncoderPosition() {
+		return flyWheelTalon.getEncPosition();
 	}
 	
-	public double getShooterEncoderDistance() {
-		return shooterEncoder.getDistance();
+	public double getMagEncoderVelocity() {
+		return flyWheelTalon.getEncVelocity();
 	}
 	
     // Put methods for controlling this subsystem
@@ -67,7 +60,7 @@ public class PIDShooter extends PIDSubsystem {
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
-		return getShooterEncoderDistance();
+		return 0.0;
 	}
 	@Override
 	protected void usePIDOutput(double output) {

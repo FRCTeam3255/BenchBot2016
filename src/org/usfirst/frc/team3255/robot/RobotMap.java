@@ -33,7 +33,7 @@ public class RobotMap {
 	public static final int DRIVETRAIN_FRONT_RIGHT_CANTALON = 2;
 	public static final int DRIVETRAIN_BACK_RIGHT_CANTALON = 3;
 	
-	public static final int SHOOTER_FLYWHEEL_CANTALON = 4;
+	public static final int SHOOTER_FLYWHEEL_CANTALON = 5;
 	
 	// Digital IO Ports
 	public static final int DRIVETRAIN_LEFT_ENCODER_CHA = 2;

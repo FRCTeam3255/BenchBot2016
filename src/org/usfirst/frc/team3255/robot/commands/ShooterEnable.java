@@ -13,7 +13,7 @@ public class ShooterEnable extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.setSpeed(1.0);
+    	shooter.setSpeed(0.5);
     }
 
     // Called repeatedly when this Command is scheduled to run
