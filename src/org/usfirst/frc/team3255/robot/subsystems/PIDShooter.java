@@ -1,8 +1,10 @@
 package org.usfirst.frc.team3255.robot.subsystems;
 
 import org.usfirst.frc.team3255.robot.RobotMap;
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
@@ -23,40 +25,57 @@ public class PIDShooter extends PIDSubsystem {
 	}
 	
 	// Motor Controls
-	CANTalon flyWheelTalon = null;
+	CANTalon leftFlyWheelTalon = null;
+	CANTalon rightFlyWheelTalon = null;
 	
 	private static final int ENCODER_COUNT_PER_ROTATION = 750;
 	private static final double MAX_SHOOTER_PID_SPEED = 0.6;
 	
 	public void init(){
-		flyWheelTalon = new CANTalon(RobotMap.SHOOTER_FLYWHEEL_CANTALON);
+		leftFlyWheelTalon = new CANTalon(RobotMap.SHOOTER_LEFT_FLYWHEEL_CANTALON);
+		rightFlyWheelTalon = new CANTalon(RobotMap.SHOOTER_RIGHT_FLYWHEEL_CANTALON);
 		
-		flyWheelTalon.setSafetyEnabled(false);
+		leftFlyWheelTalon.setSafetyEnabled(false);
+		rightFlyWheelTalon.setSafetyEnabled(false);
 		
-		LiveWindow.addActuator("Shooter", "Flywheel Talon", flyWheelTalon);
+		LiveWindow.addActuator("Shooter", "Flywheel Talon", leftFlyWheelTalon);
 		
 		LiveWindow.addActuator("Shooter", "Shooter PID Controller", this.getPIDController());
 	}
 	
-	public void setSpeed(double s) {
-		flyWheelTalon.set(s);
+	public void setControlMode(TalonControlMode mode) {
+		leftFlyWheelTalon.changeControlMode(mode);
+	}
+	
+	public void set(double s) {
+		// For Talon in Voltage Mode
+		// If battery voltage is 12.6V, output will be 47.6 with value of 6.0
+		leftFlyWheelTalon.set(s);
+		rightFlyWheelTalon.set(-s);
 	}
 	
 	public double getMagEncoderPosition() {
-		return flyWheelTalon.getEncPosition();
+		return leftFlyWheelTalon.getEncPosition();
 	}
 	
 	public double getMagEncoderVelocity() {
-		return flyWheelTalon.getEncVelocity();
+		return leftFlyWheelTalon.getEncVelocity();
 	}
 	
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+	public double getMagEncoderCurrent() {
+		return leftFlyWheelTalon.getBusVoltage();
+	}
+	
+	public void setTalonVoltageRamp(double v) {
+		// 0V to 12V in 500ms with value of 24.0
+		leftFlyWheelTalon.setVoltageCompensationRampRate(v);
+	}
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
 	@Override
 	protected double returnPIDInput() {
 		// TODO Auto-generated method stub
@@ -65,7 +84,7 @@ public class PIDShooter extends PIDSubsystem {
 	@Override
 	protected void usePIDOutput(double output) {
 		// TODO Auto-generated method stub
-		setSpeed(Math.min(output, MAX_SHOOTER_PID_SPEED));
+		set(Math.min(output, MAX_SHOOTER_PID_SPEED));
 	}
 }
 

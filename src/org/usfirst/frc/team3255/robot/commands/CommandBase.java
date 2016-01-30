@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public abstract class CommandBase extends Command {
 	public static PWMDriveTrain drivetrain;
-	public static PIDShooter shooter;
 	public static Navigation navigation;
 	public static PIDCassette PIDCassette;
 	public static PIDShooter PIDShooter;
@@ -23,7 +22,6 @@ public abstract class CommandBase extends Command {
 	public static void init() {
 		navigation = new Navigation();
 		drivetrain = new PWMDriveTrain();
-		shooter = new PIDShooter();
 		PIDCassette = new PIDCassette();
 		PIDShooter = new PIDShooter();
 		telemetry = new Telemetry();

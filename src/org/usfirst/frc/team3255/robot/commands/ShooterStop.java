@@ -3,23 +3,23 @@ package org.usfirst.frc.team3255.robot.commands;
 /**
  *
  */
-public class ShooterEnable extends CommandBase {
+public class ShooterStop extends CommandBase {
 
-    public ShooterEnable() {
+    public ShooterStop() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(shooter);
+    	requires(PIDShooter);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	shooter.setSpeed(0.5);
+    	PIDShooter.set(0.0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     }
-    
+
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;

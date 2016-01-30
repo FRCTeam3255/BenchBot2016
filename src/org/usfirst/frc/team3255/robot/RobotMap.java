@@ -33,7 +33,8 @@ public class RobotMap {
 	public static final int DRIVETRAIN_FRONT_RIGHT_CANTALON = 2;
 	public static final int DRIVETRAIN_BACK_RIGHT_CANTALON = 3;
 	
-	public static final int SHOOTER_FLYWHEEL_CANTALON = 5;
+	public static final int SHOOTER_LEFT_FLYWHEEL_CANTALON = 5;
+	public static final int SHOOTER_RIGHT_FLYWHEEL_CANTALON = 6;
 	
 	// Digital IO Ports
 	public static final int DRIVETRAIN_LEFT_ENCODER_CHA = 2;
@@ -48,12 +49,6 @@ public class RobotMap {
 	//Axies
 	public static final int AXIS_ARCADE_MOVE = 1;
 	public static final int AXIS_ARCADE_ROTATE = 2;
-	
-	
-	
-
-	
-	
 
 	// If you are using multiple modules, make sure to define both the port
     // number and the module. For example you with a rangefinder:

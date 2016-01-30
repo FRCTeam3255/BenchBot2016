@@ -24,9 +24,9 @@ public class ShooterShoot extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	addSequential(new ShooterEnable());
+    	addSequential(new ShooterSetSpeed());
     	addSequential(new DoDelay(2));
-    	addSequential(new ShooterDisable());
+    	addSequential(new ShooterStop());
     	
     }
 }
