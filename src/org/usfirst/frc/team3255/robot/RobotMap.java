@@ -46,6 +46,10 @@ public class RobotMap {
 	public static final int SHOOTER_FLYWHEEL_ENCODER_CHA = 4;
 	public static final int SHOOTER_FLYWHEEL_ENCODER_CHB = 5;
 	
+	// Solenoids
+	public static final int SOLENOID_OPEN = 6;
+	public static final int SOLENOID_CLOSE = 7;
+	
 	//Axies
 	public static final int AXIS_ARCADE_MOVE = 1;
 	public static final int AXIS_ARCADE_ROTATE = 2;

@@ -38,6 +38,9 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putData("Shooter Set Voltage", new ShooterSetVoltage());
 		SmartDashboard.putData("Shooter Stop", new ShooterStop());
 		
+		SmartDashboard.putData("Solenoid Open", new SolenoidOpen());
+		SmartDashboard.putData("Solenoid Close", new SolenoidClose());
+		
 	}
 	
 	public void update() {

@@ -12,6 +12,7 @@ public abstract class CommandBase extends Command {
 	public static Navigation navigation;
 	public static PIDCassette PIDCassette;
 	public static PIDShooter PIDShooter;
+	public static Pneumatics pneumatics;
 	public static Telemetry telemetry;
 	public static OI oi;
 	
@@ -24,6 +25,7 @@ public abstract class CommandBase extends Command {
 		drivetrain = new PWMDriveTrain();
 		PIDCassette = new PIDCassette();
 		PIDShooter = new PIDShooter();
+		pneumatics = new Pneumatics();
 		telemetry = new Telemetry();
 		oi = new OI();
 	}
