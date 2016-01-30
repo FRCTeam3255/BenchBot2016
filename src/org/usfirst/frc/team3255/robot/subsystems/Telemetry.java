@@ -52,6 +52,7 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putNumber("Mag Encoder Velocity", CommandBase.PIDShooter.getMagEncoderVelocity());
 		SmartDashboard.putNumber("Input Voltage", CommandBase.PIDShooter.getInputVoltage());
 		SmartDashboard.putNumber("Output Voltage", CommandBase.PIDShooter.getOutputVoltage());
+		SmartDashboard.putNumber("Output Current", CommandBase.PIDShooter.getOutputCurrent());
 	}
 
     public void initDefaultCommand() {

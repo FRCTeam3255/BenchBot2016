@@ -4,6 +4,7 @@ import org.usfirst.frc.team3255.robot.RobotMap;
 import org.usfirst.frc.team3255.robot.RobotPreferences;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -53,6 +54,7 @@ public class PIDShooter extends PIDSubsystem {
 		// If battery voltage is 12.6V, output will be 47.6 with value of 6.0
 		leftFlyWheelTalon.set(s);
 		rightFlyWheelTalon.set(-s);
+    	DriverStation.reportError("Set = " + s + "\n", false);
 	}
 	
 	public double getMagEncoderPosition() {
@@ -69,6 +71,10 @@ public class PIDShooter extends PIDSubsystem {
 	
 	public double getOutputVoltage() {
 		return leftFlyWheelTalon.getOutputVoltage();
+	}
+	
+	public double getOutputCurrent() {
+		return leftFlyWheelTalon.getOutputCurrent();
 	}
 	
 	public void setTalonVoltageRamp(double v) {

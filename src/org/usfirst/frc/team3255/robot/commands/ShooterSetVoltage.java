@@ -21,7 +21,6 @@ public class ShooterSetVoltage extends CommandBase {
     	PIDShooter.setControlMode(TalonControlMode.Voltage);
     	PIDShooter.setTalonVoltageRamp(RobotPreferences.shooterVoltageRamp());
     	PIDShooter.set(RobotPreferences.talonVoltageSpeed());
-    	DriverStation.reportError("Voltage = " + RobotPreferences.talonVoltageSpeed(), false);
     }
 
     // Called repeatedly when this Command is scheduled to run
