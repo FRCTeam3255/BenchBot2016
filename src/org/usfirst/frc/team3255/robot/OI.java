@@ -39,8 +39,8 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	
 	//Joysticks
-	public static Joystick manipulatorStick = new Joystick(RobotMap.JOYSTICK_MANIPULATOR);
 	public static Joystick driverStick = new Joystick(RobotMap.JOYSTICK_DRIVER);
+	public static Joystick manipulatorStick = new Joystick(RobotMap.JOYSTICK_MANIPULATOR);
 	
 	Button M1 = new JoystickButton(manipulatorStick, 1);
 	

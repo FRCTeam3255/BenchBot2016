@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3255.robot.subsystems;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
@@ -8,22 +10,26 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class EncoderDistancePID extends PIDSubsystem {
     
-	private static final double DEFAULT_P = 0.0;
-	private static final double DEFAULT_I = 0.0;
-	private static final double DEFAULT_D = 0.0;
-	
-	private static final double OUTPUT_MIN = -0.8;
-	private static final double OUTPUT_MAX = 0.8;
-
 	Encoder encoder = null;
 	
 	private double output = 0;
 	
 	public EncoderDistancePID(Encoder encoder) {
-		super(DEFAULT_P, DEFAULT_I, DEFAULT_D);
-		this.setOutputRange(OUTPUT_MIN, OUTPUT_MAX);
+		super(0, 0, 0);
+		updatePIDValues();
 		
 		this.encoder = encoder;
+	}
+	
+	// update the PID coefficients by reading values from the dashboard
+	public void updatePIDValues() {
+		this.getPIDController().setPID(
+				RobotPreferences.EncoderPIDP(),
+				RobotPreferences.EncoderPIDI(),
+				RobotPreferences.EncoderPIDD());
+		
+		double maxSpeed = RobotPreferences.EncoderSpeedMax();
+		this.setOutputRange(-maxSpeed, maxSpeed);
 	}
 
 	@Override

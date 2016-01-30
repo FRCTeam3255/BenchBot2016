@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3255.robot.subsystems;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -9,19 +10,27 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class VisionDistancePID extends PIDSubsystem {
     
-	private static final double DEFAULT_P = 0.0;
-	private static final double DEFAULT_I = 0.0;
-	private static final double DEFAULT_D = 0.0;
-
 	private double output = 0;
 	private boolean outputValid = false;
 	
-	public VisionDistancePID(double desiredDistance) {
-		super(DEFAULT_P, DEFAULT_I, DEFAULT_D);
+	public VisionDistancePID() {
+		super(0, 0, 0);
+		updatePIDValues();
+	}
 
+	// update the PID values based on preferences set from the dashboard
+	public void updatePIDValues() {
+		this.getPIDController().setPID(
+				RobotPreferences.VisionDistancePIDP(),
+				RobotPreferences.VisionDistancePIDI(),
+				RobotPreferences.VisionDistancePIDD());
+				
+		double maxSpeed = RobotPreferences.MoveSpeedMax();
+		this.setOutputRange(-maxSpeed, maxSpeed);
+		
 		// This controller uses the distance to the vision target as the sensed value.
 		// Therefore the setpoint is set to the desired distance from the vision target.
-		this.setSetpoint(desiredDistance);
+		this.setSetpoint(RobotPreferences.VisionDistance());
 	}
 
 	@Override

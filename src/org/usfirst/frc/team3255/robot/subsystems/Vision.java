@@ -3,6 +3,7 @@ package org.usfirst.frc.team3255.robot.subsystems;
 import java.util.Comparator;
 import java.util.Vector;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 import org.usfirst.frc.team3255.robot.commands.VisionUpdate;
 
@@ -69,9 +70,9 @@ public class Vision extends Subsystem {
 	NIVision.Rect rect = new NIVision.Rect(10, 10, 100, 100);
 	
 	//Constants
-	public static NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(30, 40);	//Default hue range for yellow tote
-	public static NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(140, 255);	//Default saturation range for yellow tote
-	public static NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(180, 255);	//Default value range for yellow tote
+	public static NIVision.Range TOTE_HUE_RANGE = new NIVision.Range(RobotPreferences.VisionHueMin(), RobotPreferences.VisionHueMax());	//Default hue range for yellow tote
+	public static NIVision.Range TOTE_SAT_RANGE = new NIVision.Range(RobotPreferences.VisionSatMin(), RobotPreferences.VisionSatMax());	//Default saturation range for yellow tote
+	public static NIVision.Range TOTE_VAL_RANGE = new NIVision.Range(RobotPreferences.VisionValMin(), RobotPreferences.VisionValMax());	//Default value range for yellow tote
 	public static double AREA_MINIMUM = 0.5; //Default Area minimum for particle as a percentage of total image area
 	double LONG_RATIO = 2.22; //Tote long side = 26.9 / Tote height = 12.1 = 2.22
 	double SHORT_RATIO = 1.4; //Tote short side = 16.9 / Tote height = 12.1 = 1.4
@@ -89,10 +90,10 @@ public class Vision extends Subsystem {
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA, AREA_MINIMUM, 100.0, 0, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
-        frontSession = NIVision.IMAQdxOpenCamera("cam0",
+        frontSession = NIVision.IMAQdxOpenCamera(RobotPreferences.frontCamera(),
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
-        rearSession = NIVision.IMAQdxOpenCamera("cam1",
+        rearSession = NIVision.IMAQdxOpenCamera(RobotPreferences.rearCamera(),
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         
         currSession = frontSession;
@@ -121,12 +122,12 @@ public class Vision extends Subsystem {
         NIVision.IMAQdxGrab(currSession, frame, 1);
         
 		//Update threshold values from SmartDashboard. For performance reasons it is recommended to remove this after calibration is finished.
-		TOTE_HUE_RANGE.minValue = (int)CommandBase.telemetry.getHueMin();
-		TOTE_HUE_RANGE.maxValue = (int)CommandBase.telemetry.getHueMax();
-		TOTE_SAT_RANGE.minValue = (int)CommandBase.telemetry.getSatMin();
-		TOTE_SAT_RANGE.maxValue = (int)CommandBase.telemetry.getSatMax();
-		TOTE_VAL_RANGE.minValue = (int)CommandBase.telemetry.getValMin();
-		TOTE_VAL_RANGE.maxValue = (int)CommandBase.telemetry.getValMax();
+		TOTE_HUE_RANGE.minValue = RobotPreferences.VisionHueMin();
+		TOTE_HUE_RANGE.maxValue = RobotPreferences.VisionHueMax();
+		TOTE_SAT_RANGE.minValue = RobotPreferences.VisionSatMin();
+		TOTE_SAT_RANGE.maxValue = RobotPreferences.VisionSatMax();
+		TOTE_VAL_RANGE.minValue = RobotPreferences.VisionValMin();
+		TOTE_VAL_RANGE.maxValue = RobotPreferences.VisionValMax();
 
 		//Threshold the image looking for yellow (tote color)
 		NIVision.imaqColorThreshold(HSVFrame, frame, 255, NIVision.ColorMode.HSV, TOTE_HUE_RANGE, TOTE_SAT_RANGE, TOTE_VAL_RANGE);

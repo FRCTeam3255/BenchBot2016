@@ -1,26 +1,35 @@
 package org.usfirst.frc.team3255.robot.subsystems;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 
 public class VisionRotatePID extends PIDSubsystem {
     
-	private static final double DEFAULT_P = 0.0;
-	private static final double DEFAULT_I = 0.0;
-	private static final double DEFAULT_D = 0.0;
-
 	private double output = 0;
 	private boolean outputValid = false;
 	
 	public VisionRotatePID() {
-		super(DEFAULT_P, DEFAULT_I, DEFAULT_D);
+		super(0, 0, 0);
+		updatePIDValues();
 		
 		// this controller uses the location of the target relative to the center of the
 		// image as the sensed value. This gets computed in the range of -1 -> +1 with
 		// -1 being on the left edge of the image, and +1 on the right edge of the image.
 		// Therefore, the setpoint to controller wants to achieve is always 0.
 		this.setSetpoint(0);
+	}
+	
+	// update the PID coefficients by reading values from the dashboard
+	public void updatePIDValues() {
+		this.getPIDController().setPID(
+				RobotPreferences.VisionRotatePIDP(),
+				RobotPreferences.VisionRotatePIDI(),
+				RobotPreferences.VisionRotatePIDD());
+		
+		double maxSpeed = RobotPreferences.RotateSpeedMax();
+		this.setOutputRange(-maxSpeed, maxSpeed);
 	}
 
 	@Override

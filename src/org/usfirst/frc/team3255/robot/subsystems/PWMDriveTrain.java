@@ -2,6 +2,7 @@ package org.usfirst.frc.team3255.robot.subsystems;
 
 import org.usfirst.frc.team3255.robot.OI;
 import org.usfirst.frc.team3255.robot.RobotMap;
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 import org.usfirst.frc.team3255.robot.commands.CommandBase;
 import org.usfirst.frc.team3255.robot.commands.DriveArcade;
 
@@ -40,9 +41,6 @@ public class PWMDriveTrain extends Subsystem {
 	EncoderDistancePID encoderDistancePID = null;
 	
 	private static final int ENCODER_COUNTS_PER_ROTATION = 750;
-	private static final double MAX_PID_MOVE_SPEED = 0.7;
-	private static final double MAX_PID_ROTATE_SPEED = 0.6;
-	private static final double VISION_DISTANCE = 6.0;
     
 	// Define constructors here
 	public PWMDriveTrain() {
@@ -79,15 +77,12 @@ public class PWMDriveTrain extends Subsystem {
 		
 		// PIDController for vision based turning
 		visionRotatePID = new VisionRotatePID();
-		visionRotatePID.setOutputRange(-MAX_PID_ROTATE_SPEED, MAX_PID_ROTATE_SPEED);
 		
 		// PIDController for vision based forward/reverse speed
-		visionDistancePID = new VisionDistancePID(VISION_DISTANCE);
-		visionDistancePID.setOutputRange(-MAX_PID_MOVE_SPEED, MAX_PID_MOVE_SPEED);
+		visionDistancePID = new VisionDistancePID();
 		
 		// PIDController to drive to a specified encoder distance
 		encoderDistancePID = new EncoderDistancePID(leftEncoder);		
-		encoderDistancePID.setOutputRange(-MAX_PID_MOVE_SPEED, MAX_PID_MOVE_SPEED);
 		
 		LiveWindow.addActuator("Drivetrain", "Front Left Talon", frontLeftTalon);
 		// LiveWindow.addActuator("Drivetrain", "Back Left Talon", backLeftTalon);
@@ -106,6 +101,18 @@ public class PWMDriveTrain extends Subsystem {
 		backRightTalon.set(-s);
 	}
 	
+	public double getSpeed() {
+		return getLeftSpeed();
+	}
+	
+	public double getLeftSpeed() {
+		return frontLeftTalon.get();
+	}
+	
+	public double getRightSpeed() {
+		return frontRightTalon.get();
+	}
+	
 	public void arcadeDrive(){
 		double moveSpeed = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_MOVE);
 		double moveRotate = -OI.driverStick.getRawAxis(RobotMap.AXIS_ARCADE_ROTATE);
@@ -114,7 +121,7 @@ public class PWMDriveTrain extends Subsystem {
 	}
 	
 	public void visionDrive(){
-		double moveSpeed = visionDistancePID.getOuptut();
+		double moveSpeed = -visionDistancePID.getOuptut();
 		double moveRotate = -visionRotatePID.getOuptut();
 		
 		robotDrive.arcadeDrive(moveSpeed, moveRotate);
@@ -136,7 +143,11 @@ public class PWMDriveTrain extends Subsystem {
 		// reset each of the vision PIDs
 		visionRotatePID.getPIDController().reset();
 		visionDistancePID.getPIDController().reset();
-		
+
+		// set the PID coefficients from the preferences on the dashboard
+		visionRotatePID.updatePIDValues();
+		visionDistancePID.updatePIDValues();
+
 		// enable each of the vision PIDs
 		visionRotatePID.enable();
 		visionDistancePID.enable();
@@ -151,7 +162,10 @@ public class PWMDriveTrain extends Subsystem {
 	public void startEncoderPID() {
 		// reset the encoder PID
 		encoderDistancePID.getPIDController().reset();
-		
+
+		// set the PID coefficients from the preferences on the dashboard
+		encoderDistancePID.updatePIDValues();
+
 		// enable the encoder PID
 		encoderDistancePID.enable();
 	}

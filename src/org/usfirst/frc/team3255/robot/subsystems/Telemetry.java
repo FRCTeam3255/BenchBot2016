@@ -35,18 +35,15 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putData("Reset Encoders", new DriveEncoderReset());
 		
 		// Vision
-		SmartDashboard.putNumber("Tote hue min", Vision.TOTE_HUE_RANGE.minValue);
-		SmartDashboard.putNumber("Tote hue max", Vision.TOTE_HUE_RANGE.maxValue);
-		SmartDashboard.putNumber("Tote sat min", Vision.TOTE_SAT_RANGE.minValue);
-		SmartDashboard.putNumber("Tote sat max", Vision.TOTE_SAT_RANGE.maxValue);
-		SmartDashboard.putNumber("Tote val min", Vision.TOTE_VAL_RANGE.minValue);
-		SmartDashboard.putNumber("Tote val max", Vision.TOTE_VAL_RANGE.maxValue);
 		SmartDashboard.putNumber("Area min %", Vision.AREA_MINIMUM);
 
 		SmartDashboard.putBoolean("Processed Image", false);
 	}
 	
 	public void update() {
+		SmartDashboard.putNumber("Drivetrain Left Speed", CommandBase.drivetrain.getLeftSpeed());
+		SmartDashboard.putNumber("Drivetrain Right Speed", CommandBase.drivetrain.getRightSpeed());
+		
 		SmartDashboard.putNumber("Left Encoder Counts", CommandBase.drivetrain.getLeftEncoderCount());
 		SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
@@ -62,30 +59,6 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putBoolean("IsTote", CommandBase.vision.isTote());
 		SmartDashboard.putNumber("Tote Distance", CommandBase.vision.getToteDistance());
 		SmartDashboard.putNumber("Tote X", CommandBase.vision.getToteCenterX());
-	}
-
-	public double getHueMin() {
-		return SmartDashboard.getNumber("Tote hue min");
-	}
-	
-	public double getHueMax() {
-		return SmartDashboard.getNumber("Tote hue max");
-	}
-	
-	public double getSatMin() {
-		return SmartDashboard.getNumber("Tote sat min");
-	}
-	
-	public double getSatMax() {
-		return SmartDashboard.getNumber("Tote sat max");
-	}
-	
-	public double getValMin() {
-		return SmartDashboard.getNumber("Tote val min");
-	}
-	
-	public double getValMax() {
-		return SmartDashboard.getNumber("Tote val max");
 	}
 	
 	public double getAreaMin() {
