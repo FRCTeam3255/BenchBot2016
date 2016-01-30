@@ -45,6 +45,7 @@ public class PIDShooter extends PIDSubsystem {
 	
 	public void setControlMode(TalonControlMode mode) {
 		leftFlyWheelTalon.changeControlMode(mode);
+		rightFlyWheelTalon.changeControlMode(mode);
 	}
 	
 	public void set(double s) {
@@ -67,7 +68,7 @@ public class PIDShooter extends PIDSubsystem {
 	}
 	
 	public double getOutputVoltage() {
-		return rightFlyWheelTalon.getOutputVoltage();
+		return leftFlyWheelTalon.getOutputVoltage();
 	}
 	
 	public void setTalonVoltageRamp(double v) {

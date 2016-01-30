@@ -3,6 +3,7 @@ package org.usfirst.frc.team3255.robot.commands;
 import org.usfirst.frc.team3255.robot.RobotPreferences;
 
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  *
@@ -20,6 +21,7 @@ public class ShooterSetVoltage extends CommandBase {
     	PIDShooter.setControlMode(TalonControlMode.Voltage);
     	PIDShooter.setTalonVoltageRamp(RobotPreferences.shooterVoltageRamp());
     	PIDShooter.set(RobotPreferences.talonVoltageSpeed());
+    	DriverStation.reportError("Voltage = " + RobotPreferences.talonVoltageSpeed(), false);
     }
 
     // Called repeatedly when this Command is scheduled to run
