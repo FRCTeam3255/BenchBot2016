@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3255.robot.commands;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
+
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 
 /**
@@ -16,7 +18,7 @@ public class ShooterSetSpeed extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
     	PIDShooter.setControlMode(TalonControlMode.PercentVbus);
-    	PIDShooter.set(0.8);
+    	PIDShooter.set(RobotPreferences.talonVBusSpeed());
     }
 
     // Called repeatedly when this Command is scheduled to run

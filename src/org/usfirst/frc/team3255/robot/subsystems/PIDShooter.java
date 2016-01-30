@@ -62,8 +62,12 @@ public class PIDShooter extends PIDSubsystem {
 		return leftFlyWheelTalon.getEncVelocity();
 	}
 	
-	public double getMagEncoderCurrent() {
+	public double getInputVoltage() {
 		return leftFlyWheelTalon.getBusVoltage();
+	}
+	
+	public double getOutputVoltage() {
+		return rightFlyWheelTalon.getOutputVoltage();
 	}
 	
 	public void setTalonVoltageRamp(double v) {

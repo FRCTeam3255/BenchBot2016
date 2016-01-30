@@ -12,5 +12,9 @@ public class RobotPreferences {
 	public static double talonVoltageSpeed() {
 		return Preferences.getInstance().getDouble("shooterVoltageSpeed", 0.0);
 	}
+
+	public static double talonVBusSpeed() {
+		return Preferences.getInstance().getDouble("shooterVBusSpeed", 0.0);
+	}
 	
 }
