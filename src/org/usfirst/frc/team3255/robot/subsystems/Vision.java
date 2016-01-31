@@ -11,6 +11,7 @@ import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
 import com.ni.vision.NIVision.ImageType;
+import com.ni.vision.NIVision.ScalingMode;
 import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -128,6 +129,9 @@ public class Vision extends Subsystem {
 		TOTE_SAT_RANGE.maxValue = RobotPreferences.VisionSatMax();
 		TOTE_VAL_RANGE.minValue = RobotPreferences.VisionValMin();
 		TOTE_VAL_RANGE.maxValue = RobotPreferences.VisionValMax();
+		
+		// scale the image down by a factor of two in both directions
+		NIVision.imaqScale(frame, frame, 4, 4, ScalingMode.SCALE_SMALLER, NIVision.NO_RECT);
 
 		//Threshold the image looking for yellow (tote color)
 		NIVision.imaqColorThreshold(HSVFrame, frame, 255, NIVision.ColorMode.HSV, TOTE_HUE_RANGE, TOTE_SAT_RANGE, TOTE_VAL_RANGE);
@@ -226,7 +230,7 @@ public class Vision extends Subsystem {
 	}
 	
 	public double getToteCenterX() {
-		return ((rect.left + (rect.width/2))-320)/320.0;
+		return ((rect.left + (rect.width/2))-80)/80.0;
 	}
 	
 	public double getToteDistance() {

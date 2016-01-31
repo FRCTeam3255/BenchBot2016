@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3255.robot.subsystems;
 
+import org.usfirst.frc.team3255.robot.RobotPreferences;
 import org.usfirst.frc.team3255.robot.commands.*;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -59,6 +60,7 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putBoolean("IsTote", CommandBase.vision.isTote());
 		SmartDashboard.putNumber("Tote Distance", CommandBase.vision.getToteDistance());
 		SmartDashboard.putNumber("Tote X", CommandBase.vision.getToteCenterX());
+		SmartDashboard.putBoolean("Vision Enabled", RobotPreferences.VisionEnabled());
 	}
 	
 	public double getAreaMin() {

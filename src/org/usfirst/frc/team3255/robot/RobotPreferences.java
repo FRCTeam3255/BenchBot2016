@@ -114,4 +114,9 @@ public class RobotPreferences {
 	public static double MoveSpeedMax() {
 		return Preferences.getInstance().getDouble("MoveMax", 0.6);
 	}
+	
+	// enables and disables the VisionUpdate command
+	public static boolean VisionEnabled() {
+		return Preferences.getInstance().getBoolean("VisionEnabled", true);
+	}
 }
