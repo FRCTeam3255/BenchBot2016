@@ -48,11 +48,13 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
 		
+		/*
 		SmartDashboard.putNumber("Mag Encoder Position", CommandBase.PIDShooter.getMagEncoderPosition());
 		SmartDashboard.putNumber("Mag Encoder Velocity", CommandBase.PIDShooter.getMagEncoderVelocity());
 		SmartDashboard.putNumber("Input Voltage", CommandBase.PIDShooter.getInputVoltage());
 		SmartDashboard.putNumber("Output Voltage", CommandBase.PIDShooter.getOutputVoltage());
 		SmartDashboard.putNumber("Output Current", CommandBase.PIDShooter.getOutputCurrent());
+		*/
 	}
 
     public void initDefaultCommand() {
