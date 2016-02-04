@@ -44,6 +44,18 @@ public class PIDShooter extends PIDSubsystem {
 		LiveWindow.addActuator("Shooter", "Shooter PID Controller", this.getPIDController());
 	}
 	
+    
+	@Override
+	protected double returnPIDInput() {
+		// TODO Auto-generated method stub
+		return 0.0;
+	}
+	@Override
+	protected void usePIDOutput(double output) {
+		// TODO Auto-generated method stub
+		set(Math.min(output, MAX_SHOOTER_PID_SPEED));
+	}
+	
 	public void setControlMode(TalonControlMode mode) {
 		leftFlyWheelTalon.changeControlMode(mode);
 		rightFlyWheelTalon.changeControlMode(mode);
@@ -57,11 +69,15 @@ public class PIDShooter extends PIDSubsystem {
     	DriverStation.reportError("Set = " + s + "\n", false);
 	}
 	
-	public double getMagEncoderPosition() {
+	public void resetEncoders() {
+		leftFlyWheelTalon.setEncPosition(0);
+	}
+	
+	public double getEncoderPosition() {
 		return leftFlyWheelTalon.getEncPosition();
 	}
 	
-	public double getMagEncoderVelocity() {
+	public double getEncoderVelocity() {
 		return leftFlyWheelTalon.getEncVelocity();
 	}
 	
@@ -86,16 +102,5 @@ public class PIDShooter extends PIDSubsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
-    
-	@Override
-	protected double returnPIDInput() {
-		// TODO Auto-generated method stub
-		return 0.0;
-	}
-	@Override
-	protected void usePIDOutput(double output) {
-		// TODO Auto-generated method stub
-		set(Math.min(output, MAX_SHOOTER_PID_SPEED));
-	}
 }
 

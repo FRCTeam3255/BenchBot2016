@@ -37,6 +37,7 @@ public class Telemetry extends Subsystem {
 		SmartDashboard.putData("Shooter Set Speed", new ShooterSetSpeed());
 		SmartDashboard.putData("Shooter Set Voltage", new ShooterSetVoltage());
 		SmartDashboard.putData("Shooter Stop", new ShooterStop());
+		SmartDashboard.putData("Shooter Reset Encoders", new ShooterResetEncoders());
 		
 		SmartDashboard.putData("Solenoid Open", new SolenoidOpen());
 		SmartDashboard.putData("Solenoid Close", new SolenoidClose());
@@ -44,13 +45,14 @@ public class Telemetry extends Subsystem {
 	}
 	
 	public void update() {
-		SmartDashboard.putNumber("Left Encoder Counts", CommandBase.drivetrain.getLeftEncoderCount());
-		SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
+		// SmartDashboard.putNumber("Left Encoder Counts", CommandBase.drivetrain.getLeftEncoderCount());
+		// SmartDashboard.putNumber("Left Encoder Distance", CommandBase.drivetrain.getLeftEncoderDistance());
 		SmartDashboard.putNumber("Yaw", CommandBase.navigation.getYaw());
 		
+		
+		SmartDashboard.putNumber("Shooter Encoder Position", CommandBase.PIDShooter.getEncoderPosition());
+		SmartDashboard.putNumber("Shooter Encoder Velocity", CommandBase.PIDShooter.getEncoderVelocity());
 		/*
-		SmartDashboard.putNumber("Mag Encoder Position", CommandBase.PIDShooter.getMagEncoderPosition());
-		SmartDashboard.putNumber("Mag Encoder Velocity", CommandBase.PIDShooter.getMagEncoderVelocity());
 		SmartDashboard.putNumber("Input Voltage", CommandBase.PIDShooter.getInputVoltage());
 		SmartDashboard.putNumber("Output Voltage", CommandBase.PIDShooter.getOutputVoltage());
 		SmartDashboard.putNumber("Output Current", CommandBase.PIDShooter.getOutputCurrent());
